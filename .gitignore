@@ -1,0 +1,21 @@
+# Dependency directories
+node_modules/
+dist/
+backups/
+certs/
+
+# Ignore logs and system files
+*.log
+*.DS_Store
+
+# Ignore binaries and installers
+*.exe
+*.msi
+*.AppImage
+*.dmg
+
+# Ignore VSCode or IDE files
+.vscode/
+
+# Electron-specific
+*.asar

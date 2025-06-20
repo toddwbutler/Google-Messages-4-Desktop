@@ -1,0 +1,54 @@
+{
+  "name": "Google-Messages-4-Desktop",
+  "version": "1.0.0",
+  "description": "Run Google Messages from Desktops",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --publish always"
+  },
+  "build": {
+    "appId": "com.toddwbutler.Google-Messages-4-Desktop",
+    "productName": "Google-Messages-4-Desktop",
+    "files": [
+      "**/*"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "icons/default.ico"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "icon": "icons/default.icns",
+      "category": "public.app-category.communication"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "icons"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "toddwbutler",
+      "repo": "Google-Messages-4-Desktop"
+    }
+  },
+  "dependencies": {
+    "electron-store": "^8.1.0",
+    "electron-updater": "^5.3.0",
+    "start": "^5.1.0"
+  },
+  "devDependencies": {
+    "electron": "^29.0.0",
+    "electron-builder": "^24.13.1"
+  }
+}

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Settings</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 2rem;
+      background-color: #121212;
+      color: #eee;
+    }
+    h2 {
+      font-size: 24px;
+    }
+    label {
+      display: block;
+      margin: 1rem 0 0.5rem;
+    }
+    .icon-preview {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .icon-preview img {
+      width: 32px;
+      height: 32px;
+    }
+    select, input[type="checkbox"] {
+      margin-bottom: 1rem;
+    }
+    button {
+      margin-top: 1rem;
+      margin-right: 0.5rem;
+      padding: 0.5rem 1rem;
+      background-color: #1e88e5;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #1565c0;
+    }
+    #toast {
+      visibility: hidden;
+      min-width: 200px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 4px;
+      padding: 12px;
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      transition: visibility 0s, opacity 0.5s linear;
+      opacity: 0;
+    }
+    #toast.show {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <h2>Settings</h2>
+  <label for="iconSelect">Tray Icon:</label>
+  <div class="icon-preview">
+    <select id="iconSelect"></select>
+    <img id="iconPreview" src="" alt="icon preview">
+  </div>
+
+  <label><input type="checkbox" id="trayToggle"> Enable Tray</label>
+  <label><input type="checkbox" id="notifyToggle"> Enable Notifications</label>
+
+  <button onclick="applySettings()">Save</button>
+  <button onclick="resetDefaults()">Reset to Default</button>
+  <button onclick="electronAPI.navigateMain()">Continue</button>
+
+  <div id="toast">Settings saved</div>
+
+  <script>
+    window.electronAPI.getSettings();
+    window.electronAPI.onSettings(data => {
+      const select = document.getElementById('iconSelect');
+      const preview = document.getElementById('iconPreview');
+      select.innerHTML = '';
+      data.icons.forEach(icon => {
+        const option = document.createElement('option');
+        option.value = icon;
+        option.textContent = icon;
+        if (icon === data.icon) {
+          option.selected = true;
+          preview.src = `icons/${icon}`;
+        }
+        select.appendChild(option);
+      });
+      document.getElementById('trayToggle').checked = data.showTray;
+      document.getElementById('notifyToggle').checked = data.showNotifications;
+    });
+
+    window.electronAPI.onSettingsSaved(() => {
+      const toast = document.getElementById('toast');
+      toast.className = 'show';
+      setTimeout(() => toast.className = toast.className.replace('show', ''), 3000);
+    });
+
+    document.getElementById('iconSelect').addEventListener('change', function () {
+      const selected = this.value;
+      document.getElementById('iconPreview').src = `icons/${selected}`;
+    });
+
+    function applySettings() {
+      const icon = document.getElementById('iconSelect').value;
+      const showTray = document.getElementById('trayToggle').checked;
+      const showNotifications = document.getElementById('notifyToggle').checked;
+      window.electronAPI.updateSettings({ icon, showTray, showNotifications });
+    }
+
+function resetDefaults() {
+  if (confirm("Are you sure you want to reset all settings to default?")) {
+    document.getElementById('iconSelect').value = 'default.png';
+    document.getElementById('iconPreview').src = 'icons/default.png';
+    document.getElementById('trayToggle').checked = true;
+    document.getElementById('notifyToggle').checked = true;
+    window.electronAPI.resetSettings();
+  }
+}
+
+  </script>
+</body>
+</html>
