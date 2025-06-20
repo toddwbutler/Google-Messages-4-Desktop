@@ -1,7 +1,7 @@
 {
   "name": "Google-Messages-4-Desktop",
   "version": "1.0.0",
-  "description": "Run Google Messages from Desktops",
+  "description": "Run Google Messages from Desktop",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -34,7 +34,22 @@
         "AppImage",
         "deb"
       ],
-      "icon": "icons"
+      "category": "Network",
+      "maintainer": "todd.wesley.butler@gmail.com",
+      "icon": "icons/default.png",
+      "synopsis": "Desktop wrapper for Google Messages",
+      "description": "Google Messages for Desktop with tray, settings, backups, and auto-update support."
+      },
+     "deb": {
+      "depends": [
+        "libnss3",
+        "libatk1.0-0",
+        "libatk-bridge2.0-0",
+        "libxss1",
+        "libgtk-3-0",
+        "libdrm2",
+        "libxcb-dri3-0"
+      ]
     },
     "publish": {
       "provider": "github",
@@ -49,6 +64,6 @@
   },
   "devDependencies": {
     "electron": "^29.0.0",
-    "electron-builder": "^24.13.1"
+    "electron-builder": "^24.13.3"
   }
 }
