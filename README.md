@@ -10,7 +10,7 @@ A simple, cross-platform desktop wrapper for [Google Messages Web](https://messa
 - Persistent settings (window size, theme, etc.)
 - Backup & restore settings
 - GitHub-based auto-updater
-- Multi-platform builds: Windows, macOS, Linux
+- Multi-platform builds: Windows  (OS X and Linux builds in progress)
 - NOTE: These packages are NOT signed.  I don't have the resources to add code signing.  However I'm open to adding this feature if resources allow.  
 
 ## 🚀 Installation
